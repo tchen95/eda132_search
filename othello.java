@@ -1,3 +1,5 @@
+// Emily Zhou and Tammy Chen
+
 public class othello {
 
     public static void main(String[] args) {
