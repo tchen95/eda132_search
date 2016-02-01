@@ -1,13 +1,9 @@
 // Emily Zhou and Tammy Chen
-
 public class othello {
 
     public static void main(String[] args) {
-        saySomething("Hello World");
+        gameboard currentGameboard = new gameboard();
+        currentGameboard.populateBoard();
+        currentGameboard.printBoard();
     }
-
-    public static void saySomething(String string) {
-    	System.out.println(string);
-    }
-
 }
