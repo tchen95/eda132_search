@@ -5,8 +5,9 @@
  * | + tally 
  * | + name
  * ----------
- * | + placePiece(int x, int y)
- * | + reversePiece(int x, int y)
+ * | + getName() : String
+ * | + getTally() : int
+ * | + addTally(int value)
  */
 
 public class player {
