@@ -18,7 +18,7 @@ public class othello {
 		while (!gameComplete) {
 			currentGameboard.printBoard();
 			Scanner reader = new Scanner(System.in);
-			System.out.println("What move would you like to make?");
+			System.out.println("Player" + currentPlayer.name + ", what move would you like to make?");
 			String input = reader.next();
 			currentGameboard.placePiece(currentPlayer, input);
 			player saveState = otherPlayer;
