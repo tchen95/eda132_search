@@ -20,11 +20,16 @@ public class gameboard {
 	board.get(4).set(4, " O");
     }
 
-	public void placePiece(player currentPlayer, String position) {
+	public boolean placePiece(player currentPlayer, player otherPlayer, String position) {
 		int row = convertIntoNumbers(position).get(0);
 		int column = convertIntoNumbers(position).get(1);
-		board.get(row).set(column, currentPlayer.name);
-		reversePieces(currentPlayer, row, column);
+		if (isLegalMove(currentPlayer, row, column)) {
+			board.get(row).set(column, currentPlayer.name);
+			reversePieces(currentPlayer, otherPlayer, row, column);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
     public void printBoard() {
@@ -149,7 +154,7 @@ public class gameboard {
 		return false;
     }
 
-    public void reversePieces(player currentPlayer, int row, int column) {
+    public void reversePieces(player currentPlayer, player otherPlayer, int row, int column) {
     	for (int i = 0; i < 8; i++) {
 	    	int r = 0;
 	    	int c = 0;
@@ -213,12 +218,12 @@ public class gameboard {
     }
 
     public ArrayList<Integer> convertIntoNumbers(String position) {
-	int row = (int) position.charAt(0) - 49;
-	int column = (int) position.charAt(1) - 97;
-	ArrayList<Integer> integerPositions = new ArrayList<Integer>();
-	integerPositions.add(row);
-	integerPositions.add(column);
-	return integerPositions;
+		int row = (int) position.charAt(0) - 49;
+		int column = (int) position.charAt(1) - 97;
+		ArrayList<Integer> integerPositions = new ArrayList<Integer>();
+		integerPositions.add(row);
+		integerPositions.add(column);
+		return integerPositions;
     }
 }
 
