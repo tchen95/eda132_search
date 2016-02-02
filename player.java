@@ -5,12 +5,13 @@
  * | + tally 
  * | + name
  * ----------
- * | + placePiece(int x, int y)
- * | + reversePiece(int x, int y)
+ * | + getName() : String
+ * | + getTally() : int
+ * | + addTally(int value)
  */
 
 public class player {
-    public String name; // player identification
+    public String name; // player piece identification, " O" or " X"
     public int tally; // number of players' pieces on the board
 
     public player(String name){
