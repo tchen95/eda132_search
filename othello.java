@@ -35,7 +35,7 @@ public class othello {
 	    // end debugging string
 
 	    
-	    currentGameboard.placePiece(currentPlayer, input);
+	    currentGameboard.placePiece(currentPlayer, otherPlayer, input);
 	    player saveState = otherPlayer;
 	    otherPlayer = currentPlayer;
 	    currentPlayer = saveState;
