@@ -10,8 +10,6 @@ public class othello {
         currentGameboard.populateBoard();
 		player p1 = new player(" X");
 		player p2 = new player(" O");
-		p1.addTally(2);
-		p2.addTally(2);
 		player currentPlayer = p1;
 		player otherPlayer = p2;
 		boolean gameComplete = false;
