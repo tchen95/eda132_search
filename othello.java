@@ -12,13 +12,15 @@ public class othello {
 	player p2 = new player(" O");
 	player currentPlayer = p1;
 	player otherPlayer = p2;
+	p1.addTally(2);
+	p2.addTally(2);
 	boolean gameComplete = false;
 	while (!gameComplete) {
 	    if (doesPlayerHaveMoves(currentPlayer, currentGameboard)) {
 		currentGameboard.printBoard();
 		System.out.println(currentPlayer.getName() + ": " + currentPlayer.getTally() +
 				   "," + otherPlayer.getName() + ": " + otherPlayer.getTally());
-		
+			    
 		Scanner reader = new Scanner(System.in);
 		System.out.println("What move would you like to make?");
 		String input = reader.next();	    
@@ -38,6 +40,7 @@ public class othello {
 	    } else {
 		gameComplete = true;
 	    }
+
 	}
 	if (p1.tally > p2.tally) {
 	    System.out.println(p1.name + " is the winner with a score of " + p1.tally + "-" + p2.tally);
