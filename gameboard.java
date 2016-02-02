@@ -48,21 +48,21 @@ public class gameboard {
 		} else {
 		    piece = " O";
 		}
-		
-		// Return false if location already has a piece there
-		if(board.get(row).get(col) != " /"){
-		    return false;
-		}
 
 		// Return false if location is out of bounds
 		if(row < 0 || row > 7 || col < 0 || col > 7){
 		    return false;
 		}
+
+		// Return false if location already has a piece there
+		if(board.get(row).get(col) != " /"){
+		    return false;
+		}
 		
 		// Checking in all 8 directions
-		int r = 0;
-		int c = 0;
 		for(int i = 0; i < 8; i++){
+		    int r = row;
+		    int c = col;
 		    switch (i) { // clock-wise direction checking starting with N
 			case 0:
 			    r--;
@@ -93,12 +93,12 @@ public class gameboard {
 			    c--;
 			    break;
 		    }
-		    if(board.get(r).get(c) == piece || board.get(r).get(c) == " /"){
-			break;
-		    } else {
+		    if(r > -1 && r < 8 && c > -1 && c < 8 &&
+		       board.get(r).get(c) != piece && board.get(r).get(c) != " /"){
+			System.out.println(r + ", "+ c + ": "+board.get(r).get(c));
+
 			boolean hasPiece = true;
 			while(hasPiece){
-			
 			    switch (i) { // clock-wise direction checking starting with N
 			    case 0:
 				r--;
@@ -135,20 +135,21 @@ public class gameboard {
 			    }
 
 			    if(board.get(r).get(c) == " /"){
+				System.out.println("bad (" + r + ","+ c + "): "+board.get(r).get(c));
 				hasPiece = false;
 			    }
 			    if(board.get(r).get(c) == piece){
+				System.out.println("good ("+r + ","+ c + "): "+board.get(r).get(c));
 				return true;
 			    }
 			}
-			
 		    }
-		}
+		}		
 		return false;
     }
 
 
-    public static ArrayList<Integer> convertIntoNumbers(String position) {
+    public ArrayList<Integer> convertIntoNumbers(String position) {
 	int row = (int) position.charAt(0) - 49;
 	int column = (int) position.charAt(1) - 97;
 	ArrayList<Integer> integerPositions = new ArrayList<Integer>();
