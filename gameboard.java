@@ -6,21 +6,22 @@ public class gameboard {
     ArrayList<ArrayList<String>> board;
 	
     public gameboard() {
-	board = new ArrayList<ArrayList<String>>();
+		board = new ArrayList<ArrayList<String>>();
     }
 
     public void populateBoard() {
-	for (int index = 0; index < 8; index++) {
-	    ArrayList<String> newRow = new ArrayList<String>(Collections.nCopies(8, " /"));
-	    board.add(index, newRow);
-	}
-	board.get(3).set(3, " O");
-	board.get(3).set(4, " X");
-	board.get(4).set(3, " X");
-	board.get(4).set(4, " O");
+		for (int index = 0; index < 8; index++) {
+		    ArrayList<String> newRow = new ArrayList<String>(Collections.nCopies(8, " /"));
+		    board.add(index, newRow);
+		}
+		board.get(3).set(3, " O");
+		board.get(3).set(4, " X");
+		board.get(4).set(3, " X");
+		board.get(4).set(4, " O");
     }
 
 	public boolean placePiece(player currentPlayer, player otherPlayer, String position) {
+		currentPlayer.addTally(1); // Update tally
 		int row = convertIntoNumbers(position).get(0);
 		int column = convertIntoNumbers(position).get(1);
 		if (isLegalMove(currentPlayer, row, column)) {
@@ -37,12 +38,12 @@ public class gameboard {
 		    System.out.print(index+1);
 		    for (int innerIndex = 0; innerIndex < 8; innerIndex++) {
 				if (innerIndex == 7) {
-				    System.out.println(board.get(index).get(innerIndex));
+			    	System.out.println(board.get(index).get(innerIndex));
 				} else {
-				    System.out.print(board.get(index).get(innerIndex));
-			    }
-			}
-    	}
+			    	System.out.print(board.get(index).get(innerIndex));
+				}
+		    }
+	    }
 		System.out.println("  a b c d e f g h");
     }
 
@@ -64,40 +65,40 @@ public class gameboard {
 		if(board.get(row).get(col) != " /"){
 		    return false;
 		}
-		
+			
 		// Checking in all 8 directions
 		for(int i = 0; i < 8; i++){
 		    int r = row;
 		    int c = col;
 		    switch (i) { // clock-wise direction checking starting with N
-			case 0:
-			    r--;
-			    break;
-			case 1:
-			    r--;
-			    c++;
-			    break;
-			case 2:
-			    c++;
-			    break;
-			case 3:
-			    r++;
-			    c++;
-			    break;
-			case 4:
-			    r++;
-			    break;
-			case 5:
-			    r++;
-			    c--;
-			    break;
-			case 6:
-			    c--;
-			    break;
-			case 7:
-			    r--;
-			    c--;
-			    break;
+		    case 0:
+			r--;
+			break;
+		    case 1:
+			r--;
+			c++;
+			break;
+		    case 2:
+			c++;
+			break;
+		    case 3:
+			r++;
+			c++;
+			break;
+		    case 4:
+			r++;
+			break;
+		    case 5:
+			r++;
+			c--;
+			break;
+		    case 6:
+			c--;
+			break;
+		    case 7:
+			r--;
+			c--;
+			break;
 		    }
 		    if(r > -1 && r < 8 && c > -1 && c < 8 &&
 		       board.get(r).get(c) != piece && board.get(r).get(c) != " /"){
@@ -135,7 +136,7 @@ public class gameboard {
 				c--;
 				break;
 			    }
-			
+				
 			    if(r < 0 || r > 7 || c < 0 || c > 7){
 				break;
 			    }
@@ -156,64 +157,67 @@ public class gameboard {
 
     public void reversePieces(player currentPlayer, player otherPlayer, int row, int column) {
     	for (int i = 0; i < 8; i++) {
-	    	int r = 0;
-	    	int c = 0;
-    		switch (i) { // clock-wise direction checking starting with N
-			case 0:
-			    r--;
-			    break;
-			case 1:
-			    r--;
-			    c++;
-			    break;
-			case 2:
-			    c++;
-			    break;
-			case 3:
-			    r++;
-			    c++;
-			    break;
-			case 4:
-			    r++;
-			    break;
-			case 5:
-			    r++;
-			    c--;
-			    break;
-			case 6:
-			    c--;
-			    break;
-			case 7:
-			    r--;
-			    c--;
-			    break;
+		    int r = 0;
+		    int c = 0;
+		    switch (i) { // clock-wise direction checking starting with N
+		    case 0:
+			r--;
+			break;
+		    case 1:
+			r--;
+			c++;
+			break;
+		    case 2:
+			c++;
+			break;
+		    case 3:
+			r++;
+			c++;
+			break;
+		    case 4:
+			r++;
+			break;
+		    case 5:
+			r++;
+			c--;
+			break;
+		    case 6:
+			c--;
+			break;
+		    case 7:
+			r--;
+			c--;
+			break;
 		    }
 		    boolean hasHitEnd = false;
 		    int startingRow = row;
 		    int startingColumn = column;
 		    ArrayList<ArrayList<Integer>> tilesToFlip = new ArrayList<ArrayList<Integer>>();
-	    	while (!hasHitEnd) {
-	    		startingRow += r;
-	    		startingColumn += c;
-	    		if (startingRow > 7 || startingRow < 0 || startingColumn > 7 || startingColumn < 0 || board.get(startingRow).get(startingColumn) == " /") {
-	    			hasHitEnd = true;
-	    			tilesToFlip = null;
-	    		} else if (board.get(startingRow).get(startingColumn) == currentPlayer.name) {
-	    			hasHitEnd = true;
-	    		} else {
-	    			ArrayList<Integer> flipTile = new ArrayList<Integer>();
-	    			flipTile.add(startingRow);
-	    			flipTile.add(startingColumn);
-	    			tilesToFlip.add(flipTile);
-	    		}
-	    	}
-	    	if (tilesToFlip != null) {
-	    		for (int index = 0; index < tilesToFlip.size(); index++) {
-	    			int flipThisTileRow = tilesToFlip.get(index).get(0);
-	    			int flipThisTileCol = tilesToFlip.get(index).get(1);
-	    			board.get(flipThisTileRow).set(flipThisTileCol, currentPlayer.name);
-	    		}
-	    	}
+		    while (!hasHitEnd) {
+			startingRow += r;
+			startingColumn += c;
+			if (startingRow > 7 || startingRow < 0 || startingColumn > 7 || startingColumn < 0 || board.get(startingRow).get(startingColumn) == " /") {
+			    hasHitEnd = true;
+			    tilesToFlip = null;
+			} else if (board.get(startingRow).get(startingColumn) == currentPlayer.name) {
+			    hasHitEnd = true;
+			} else {
+			    ArrayList<Integer> flipTile = new ArrayList<Integer>();
+			    flipTile.add(startingRow);
+			    flipTile.add(startingColumn);
+			    tilesToFlip.add(flipTile);
+			}
+		    }
+		    if (tilesToFlip != null) {
+			for (int index = 0; index < tilesToFlip.size(); index++) {
+			    int flipThisTileRow = tilesToFlip.get(index).get(0);
+			    int flipThisTileCol = tilesToFlip.get(index).get(1);
+			    board.get(flipThisTileRow).set(flipThisTileCol, currentPlayer.name);
+			}
+			currentPlayer.addTally(tilesToFlip.size()); // Update current player's tally (positive points)
+			otherPlayer.addTally((-1)*(tilesToFlip.size())); // Update other player's tally (negative points)
+			
+		    }
     	}
     }
 
