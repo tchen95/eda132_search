@@ -9,6 +9,12 @@ public class gameboard {
 		board = new ArrayList<ArrayList<String>>();
 	}
 
+	public void placePiece(player currentPlayer, String position) {
+		int row = convertIntoNumbers(position).get(0);
+		int column = convertIntoNumbers(position).get(1);
+		board.get(row).set(column, currentPlayer.name);
+	}
+
 	public void populateBoard() {
 		for (int index = 0; index < 8; index++) {
 			ArrayList<String> newRow = new ArrayList<String>(Collections.nCopies(8, " /"));
