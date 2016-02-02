@@ -16,6 +16,9 @@ public class othello {
 		while (!gameComplete) {
 			if (doesPlayerHaveMoves(currentPlayer, currentGameboard)) {
 			    currentGameboard.printBoard();
+			    System.out.println(currentPlayer.getName() + ": " + currentPlayer.getTally() +
+					       "," + otherPlayer.getName() + ": " + otherPlayer.getTally());
+			    
 			    Scanner reader = new Scanner(System.in);
 			    System.out.println("What move would you like to make?");
 			    String input = reader.next();	    
