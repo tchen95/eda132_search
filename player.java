@@ -11,7 +11,7 @@
  */
 
 public class player {
-    public String name; // player identification
+    public String name; // player piece identification, " O" or " X"
     public int tally; // number of players' pieces on the board
 
     public player(String name){
