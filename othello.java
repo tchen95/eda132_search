@@ -12,6 +12,8 @@ public class othello {
 		player p2 = new player(" O");
 		player currentPlayer = p1;
 		player otherPlayer = p2;
+		p1.addTally(2);
+		p2.addTally(2);
 		boolean gameComplete = false;
 		while (!gameComplete) {
 			if (doesPlayerHaveMoves(currentPlayer, currentGameboard)) {
