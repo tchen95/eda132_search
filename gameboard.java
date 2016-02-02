@@ -35,7 +35,7 @@ public class gameboard {
     }
 
     // Takes in which player is making the move and the desired location
-    public boolean isLegalMove(Player p, int row, int col){
+    public boolean isLegalMove(player p, int row, int col){
 	String piece = "";
 	if(p.getName() != " O"){
 	    piece = " X";
@@ -90,7 +90,7 @@ public class gameboard {
 	    if(board.get(r).get(c) == piece || board.get(r).get(c) == " /"){
 		break;
 	    } else {
-		hasPiece = true;
+		boolean hasPiece = true;
 		while(hasPiece){
 		
 		    switch (i) { // clock-wise direction checking starting with N
