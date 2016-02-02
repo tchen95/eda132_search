@@ -36,8 +36,8 @@ public class gameboard {
 				    System.out.print(board.get(index).get(innerIndex));
 			    }
 			}
-			System.out.println("  a b c d e f g h");
     	}
+		System.out.println("  a b c d e f g h");
     }
 
     // Takes in which player is making the move and the desired location
