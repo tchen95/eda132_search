@@ -102,7 +102,7 @@ public class gameboard {
 		    }
 		    if(r > -1 && r < 8 && c > -1 && c < 8 &&
 		       board.get(r).get(c) != piece && board.get(r).get(c) != " /"){
-			System.out.println(r + ", "+ c + ": "+board.get(r).get(c));
+			//	System.out.println(r + ", "+ c + ": "+board.get(r).get(c));
 
 			boolean hasPiece = true;
 			while(hasPiece){
@@ -142,11 +142,11 @@ public class gameboard {
 			    }
 
 			    if(board.get(r).get(c) == " /"){
-				System.out.println("bad (" + r + ","+ c + "): "+board.get(r).get(c));
+				//	System.out.println("bad (" + r + ","+ c + "): "+board.get(r).get(c));
 				hasPiece = false;
 			    }
 			    if(board.get(r).get(c) == piece){
-				System.out.println("good ("+r + ","+ c + "): "+board.get(r).get(c));
+				//	System.out.println("good ("+r + ","+ c + "): "+board.get(r).get(c));
 				return true;
 			    }
 			}
