@@ -140,6 +140,15 @@ public class gameboard {
 	}
 	return false;
     }
-    
-	
+
+
+    public static ArrayList<Integer> convertIntoNumbers(String position) {
+	int row = (int) position.charAt(0) - 49;
+	int column = (int) position.charAt(1) - 97;
+	ArrayList<Integer> integerPositions = new ArrayList<Integer>();
+	integerPositions.add(row);
+	integerPositions.add(column);
+	return integerPositions;
+    }
 }
+
