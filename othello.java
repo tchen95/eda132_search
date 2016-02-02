@@ -38,6 +38,14 @@ public class othello {
 				gameComplete = true;
 			}
 		}
+		if (p1.tally > p2.tally) {
+			System.out.println(p1.name + " is the winner with a score of " + p1.tally + "-" + p2.tally);
+		} else if (p2.tally > p1.tally) {
+			System.out.println(p2.name + " is the winner with a score of " + p2.tally + "-" + p1.tally);			
+		} else {
+			System.out.println("The game is a draw, with a score of " + p1.tally + "-" + p2.tally);
+		}
+
 	}
 
 	public static boolean doesPlayerHaveMoves(player Player, gameboard currentGameboard) {
