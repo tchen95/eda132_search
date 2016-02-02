@@ -24,6 +24,7 @@ public class gameboard {
 		int row = convertIntoNumbers(position).get(0);
 		int column = convertIntoNumbers(position).get(1);
 		board.get(row).set(column, currentPlayer.name);
+		reversePieces(currentPlayer, row, column);
 	}
 
     public void printBoard() {
@@ -148,6 +149,68 @@ public class gameboard {
 		return false;
     }
 
+    public void reversePieces(player currentPlayer, int row, int column) {
+    	for (int i = 0; i < 8; i++) {
+	    	int r = 0;
+	    	int c = 0;
+    		switch (i) { // clock-wise direction checking starting with N
+			case 0:
+			    r--;
+			    break;
+			case 1:
+			    r--;
+			    c++;
+			    break;
+			case 2:
+			    c++;
+			    break;
+			case 3:
+			    r++;
+			    c++;
+			    break;
+			case 4:
+			    r++;
+			    break;
+			case 5:
+			    r++;
+			    c--;
+			    break;
+			case 6:
+			    c--;
+			    break;
+			case 7:
+			    r--;
+			    c--;
+			    break;
+		    }
+		    boolean hasHitEnd = false;
+		    int startingRow = row;
+		    int startingColumn = column;
+		    ArrayList<ArrayList<Integer>> tilesToFlip = new ArrayList<ArrayList<Integer>>();
+	    	while (!hasHitEnd) {
+	    		startingRow += r;
+	    		startingColumn += c;
+	    		if (startingRow > 7 || startingRow < 0 || startingColumn > 7 || startingColumn < 0 || board.get(startingRow).get(startingColumn) == " /") {
+	    			hasHitEnd = true;
+	    			tilesToFlip = null;
+	    		} else if (board.get(startingRow).get(startingColumn) == currentPlayer.name) {
+	    			hasHitEnd = true;
+	    		} else {
+	    			ArrayList<Integer> flipTile = new ArrayList<Integer>();
+	    			flipTile.add(startingRow);
+	    			flipTile.add(startingColumn);
+	    			tilesToFlip.add(flipTile);
+	    		}
+	    	}
+	    	if (tilesToFlip != null) {
+	    		for (int index = 0; index < tilesToFlip.size(); index++) {
+	    			int flipThisTileRow = tilesToFlip.get(index).get(0);
+	    			int flipThisTileCol = tilesToFlip.get(index).get(1);
+	    			board.get(flipThisTileRow).set(flipThisTileCol, currentPlayer.name);
+	    		}
+	    	}
+    	}
+    }
 
     public ArrayList<Integer> convertIntoNumbers(String position) {
 	int row = (int) position.charAt(0) - 49;
