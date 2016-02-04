@@ -3,10 +3,27 @@ import java.util.Collections;
 
 public class gameboard {
 
-    ArrayList<ArrayList<String>> board;
+    public ArrayList<ArrayList<String>> board;
 	
-    public gameboard() {
-		board = new ArrayList<ArrayList<String>>();
+    public gameboard(ArrayList<ArrayList<String>> newBoard) {
+		this.board = newBoard;
+    }
+
+    public gameboard(gameboard copyBoard) {
+    	this.board = copyArrayList(copyBoard.board);
+    }
+
+    public ArrayList<ArrayList<String>> copyArrayList(ArrayList<ArrayList<String>> original) {
+    	ArrayList<ArrayList<String>> copyArray = new ArrayList<ArrayList<String>>();
+    	for (int outerIndex = 0; outerIndex < original.size(); outerIndex++) {
+    		ArrayList<String> copy = new ArrayList<String>();
+    		ArrayList<String> originalInnerArray = original.get(outerIndex);
+    		for (int innerIndex = 0; innerIndex < originalInnerArray.size(); innerIndex++) {
+    			copy.add(originalInnerArray.get(innerIndex));
+    		}
+    		copyArray.add(copy);
+    	}
+    	return copyArray;
     }
 
     public void populateBoard() {
