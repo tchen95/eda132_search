@@ -1,11 +1,14 @@
 // Emily Zhou and Tammy Chen
+// EDA132 VT2016
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class othello {
 
     public static void main(String[] args) {
-	System.out.println("Welcome to Othello!");
+	// Game set-up variables 
+	Scanner reader = new Scanner(System.in);	
         gameboard currentGameboard = new gameboard(new ArrayList<ArrayList<String>>());
         currentGameboard.populateBoard();
         gameboard copy = new gameboard(currentGameboard);
@@ -15,15 +18,21 @@ public class othello {
 	player otherPlayer = computer;
 	human.addTally(2);
 	computer.addTally(2);
+	int thinkTime = 1000;
 	boolean gameComplete = false;
+
+	// Opening lines
+	System.out.println("Welcome to Othello!");
+	System.out.println("How much time should the computer think? (in milliseconds): ");
+        thinkTime = reader.nextInt();
+
 	while (!gameComplete) {
 	    if (doesPlayerHaveMoves(currentPlayer, currentGameboard)) {
-		if (currentPlayer.getName() == " X") {
+		if (currentPlayer.getName() == " X") { // X, black, the human, goes first
 		    currentGameboard.printBoard();
 		    System.out.println(currentPlayer.getName() + ": " + currentPlayer.getTally() +
 				       "," + otherPlayer.getName() + ": " + otherPlayer.getTally());
-						    
-		    Scanner reader = new Scanner(System.in);
+						   
 		    System.out.println("It's your turn! What move would you like to make?");
 		    String input = reader.next();	    
 		    boolean makeMove = currentGameboard.placePiece(currentPlayer, otherPlayer, input);
@@ -33,18 +42,37 @@ public class othello {
 			makeMove = currentGameboard.placePiece(currentPlayer, otherPlayer, tryMoveAgain);
 		    }
 					
-		} else {
+		} else { // O, white, the machine, goes next
 		    player copyComputer = new player(currentPlayer);
 		    player copyHuman = new player(otherPlayer);
 		    gameboard copyGameBoard = new gameboard(currentGameboard);
-		    ArrayList<Integer> numbMove = alphaBeta(copyGameBoard, 4, -100, 100, true, copyComputer, copyHuman);
+
+		    // Timed iterative deepening
+		    // Referenced http://www.tutorialspoint.com/java/lang/system_currenttimemillis.htm
+		    // to understand currentTimeMillis() method
+
+		    long finishTime = System.currentTimeMillis() + thinkTime;
+		    int iteration = 1; // initial depth
+		    ArrayList<Integer> numbMove = new ArrayList<Integer>();
+
+		    System.out.println(System.currentTimeMillis());
+		    while(System.currentTimeMillis() < finishTime){
+			numbMove = alphaBeta(copyGameBoard, iteration, -100, 100, true, copyComputer, copyHuman);
+			iteration++;
+			System.out.println("depth of: "+iteration);
+		    }
+		    System.out.println(System.currentTimeMillis());
+		    
 		    String newMove = convertIntoString(numbMove.get(0), numbMove.get(1));
 		    boolean makeMove = currentGameboard.placePiece(currentPlayer, otherPlayer, newMove);
 		    System.out.println("Your opponent has placed a piece onto " + newMove);
 		}
+
+		// Swapping control between "currentPlayer" and "otherPlayer" for "X" and "O"
 		player saveState = otherPlayer;
 		otherPlayer = currentPlayer;
 		currentPlayer = saveState;
+		
 	    } else if (doesPlayerHaveMoves(otherPlayer, currentGameboard)) {
 		player saveState = otherPlayer;
 		otherPlayer = currentPlayer;
@@ -100,7 +128,7 @@ public class othello {
 		}
 		possibleMove.set(2, value);
 		bestMoveSoFar = possibleMove;
-		System.out.println(bestMoveSoFar);
+		//	System.out.println(bestMoveSoFar);
 		return bestMoveSoFar;
 	    } else {
 		//if both players have a move
@@ -132,7 +160,7 @@ public class othello {
 			break;
 		    }
 		}
-		System.out.println(bestMoveSoFar);
+		//	System.out.println(bestMoveSoFar);
 		return bestMoveSoFar;
 	    }
 
@@ -152,7 +180,7 @@ public class othello {
 		}
 		possibleMove.set(2, value);
 		bestMoveSoFar = possibleMove;
-		System.out.println(bestMoveSoFar);
+		//	System.out.println(bestMoveSoFar);
 		return bestMoveSoFar;
 	    } else {
 		//if both players have a move
@@ -184,7 +212,7 @@ public class othello {
 			break;
 		    }
 		}
-		System.out.println(bestMoveSoFar);
+		//	System.out.println(bestMoveSoFar);
 		return bestMoveSoFar;
 	    }
     	}
@@ -206,6 +234,7 @@ public class othello {
 	return allMoves;
     }
 
+    // Checks to see if the particular player has any available moves on the gameboard state given
     public static boolean doesPlayerHaveMoves(player Player, gameboard currentGameboard) {
 	for (int row = 0; row < 8; row++) {
 	    for (int col = 0; col < 8; col++) {
@@ -219,7 +248,7 @@ public class othello {
 
     // Converting row/col integer into a <1-9><a-h> string
     public static String convertIntoString(int row, int col){
-    	System.out.println(row + " " + col);
+	//	System.out.println(row + " " + col);
 	String move = "";
 	move += Integer.toString(row + 1);
 	char c = (char)(col + 97);

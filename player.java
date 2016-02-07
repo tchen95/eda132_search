@@ -1,5 +1,6 @@
-// Emily Zhou, Tammy Chen
-// player.java
+// Emily Zhou and Tammy Chen
+// EDA132 VT2016
+
 /*
  * | player 
  * | + tally 
