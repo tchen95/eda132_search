@@ -57,7 +57,10 @@ public class othello {
 
 		    System.out.println(System.currentTimeMillis());
 		    while(System.currentTimeMillis() < finishTime){
-			numbMove = alphaBeta(copyGameBoard, iteration, -100, 100, true, copyComputer, copyHuman);
+			ArrayList<Integer> tempMove = alphaBeta(copyGameBoard, iteration, -100, 100, true, copyComputer, copyHuman, finishTime);
+			if(tempMove.get(0) != -8000){
+			    numbMove = tempMove;
+			}
 			iteration++;
 			System.out.println("depth of: "+iteration);
 		    }
@@ -68,7 +71,7 @@ public class othello {
 		    System.out.println("Your opponent has placed a piece onto " + newMove);
 		}
 
-		// Swapping control between "currentPlayer" and "otherPlayer" for "X" and "O"
+		// Swapping control between "currentPlayer" and "otherPlayer" for "X" and "O"g
 		player saveState = otherPlayer;
 		otherPlayer = currentPlayer;
 		currentPlayer = saveState;
@@ -94,8 +97,17 @@ public class othello {
 
     }
 
-    public static ArrayList<Integer> alphaBeta(gameboard updatedBoard, int depth, int alpha, int beta, boolean isMaxPlayer, player currentPlayer, player otherPlayer) {
-    	//base case: if depth is 0 or neither player has a move to make
+    public static ArrayList<Integer> alphaBeta(gameboard updatedBoard, int depth, int alpha, int beta, boolean isMaxPlayer, player currentPlayer, player otherPlayer, long finishTime) {
+	// Time check
+	if(System.currentTimeMillis() > finishTime){
+	    ArrayList<Integer> emptyList = new ArrayList<Integer>();
+	    emptyList.add(-8000);
+	    emptyList.add(-8000);
+	    emptyList.add(-8000);
+	    return emptyList;
+	}
+
+	//base case: if depth is 0 or neither player has a move to make
     	if (depth <= 0 || !doesPlayerHaveMoves(currentPlayer, updatedBoard) && !doesPlayerHaveMoves(otherPlayer, updatedBoard)) {
 	    if (isMaxPlayer) {
 		ArrayList<Integer> movesAndTally = new ArrayList<Integer>();
@@ -111,8 +123,19 @@ public class othello {
 		return movesAndTally;
 	    }
     	}
+	
     	//checking if current player is maximizing player
     	if (isMaxPlayer) {
+
+	    // Time check
+	    if(System.currentTimeMillis() > finishTime){
+		ArrayList<Integer> emptyList = new ArrayList<Integer>();
+		emptyList.add(-8000);
+		emptyList.add(-8000);
+		emptyList.add(-8000);
+		return emptyList;
+	    }
+	    
 	    int value = -100;
 	    //checks if the current player doesn't have a move, but the opposing player does
 	    if (!doesPlayerHaveMoves(currentPlayer, updatedBoard) && doesPlayerHaveMoves(otherPlayer, updatedBoard)) {
@@ -120,7 +143,7 @@ public class othello {
 		bestMoveSoFar.add(-1000);
 		bestMoveSoFar.add(-1000);
 		bestMoveSoFar.add(0);
-		ArrayList<Integer> possibleMove = alphaBeta(updatedBoard, depth, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer);
+		ArrayList<Integer> possibleMove = alphaBeta(updatedBoard, depth, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer, finishTime);
 		value = Math.max(value, possibleMove.get(2));
 		alpha = Math.max(alpha, value);
 		if (beta <= alpha) {
@@ -145,7 +168,7 @@ public class othello {
 		    int row = currentMove.get(0);
 		    int col = currentMove.get(1);
 		    copyBoard.placePiece(copyCurrent, copyOther, convertIntoString(row, col));
-		    ArrayList<Integer> result = alphaBeta(copyBoard, depth - 1, alpha, beta, !isMaxPlayer, copyOther, copyCurrent);
+		    ArrayList<Integer> result = alphaBeta(copyBoard, depth - 1, alpha, beta, !isMaxPlayer, copyOther, copyCurrent, finishTime);
 		    if (result.get(0) == -1000) {
 			result.set(0, row);
 			result.set(2, col);
@@ -165,6 +188,16 @@ public class othello {
 	    }
 
     	} else {
+
+	    // Time check
+	    if(System.currentTimeMillis() > finishTime){
+		ArrayList<Integer> emptyList = new ArrayList<Integer>();
+		emptyList.add(-8000);
+		emptyList.add(-8000);
+		emptyList.add(-8000);
+		return emptyList;
+	    }
+	    
 	    int value = 100;
 	    //checks if the current player doesn't have a move, but the opposing player does
 	    if (!doesPlayerHaveMoves(currentPlayer, updatedBoard) && doesPlayerHaveMoves(otherPlayer, updatedBoard)) {
@@ -172,7 +205,7 @@ public class othello {
 		bestMoveSoFar.add(0);
 		bestMoveSoFar.add(0);
 		bestMoveSoFar.add(0);
-		ArrayList<Integer> possibleMove = alphaBeta(updatedBoard, depth, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer);
+		ArrayList<Integer> possibleMove = alphaBeta(updatedBoard, depth, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer, finishTime);
 		value = Math.min(value, possibleMove.get(2));
 		beta = Math.min(beta, value);
 		if (beta <= alpha) {
@@ -197,7 +230,7 @@ public class othello {
 		    int row = currentMove.get(0);
 		    int col = currentMove.get(1);
 		    copyBoard.placePiece(copyCurrent, copyOther, convertIntoString(row, col));
-		    ArrayList<Integer> result = alphaBeta(copyBoard, depth - 1, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer);
+		    ArrayList<Integer> result = alphaBeta(copyBoard, depth - 1, alpha, beta, !isMaxPlayer, otherPlayer, currentPlayer, finishTime);
 		    if (result.get(0) == -1000) {
 			result.set(0, row);
 			result.set(1, col);
