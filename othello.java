@@ -93,6 +93,7 @@ public class othello {
 
     }
 
+    // Referenced pseudo-code in https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
     public static ArrayList<Integer> alphaBeta(gameboard updatedBoard, int depth, int alpha, int beta, boolean isMaxPlayer, player currentPlayer, player otherPlayer, long finishTime) {
 	// Time check
 	if(System.currentTimeMillis() > finishTime){
