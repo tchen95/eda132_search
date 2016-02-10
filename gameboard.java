@@ -45,10 +45,10 @@ public class gameboard {
 
     // Update the board state by editing the elements of the ArrayList
     public boolean placePiece(player currentPlayer, player otherPlayer, String position) {
-		currentPlayer.addTally(1); // Update tally
 		int row = convertIntoNumbers(position).get(0);
 		int column = convertIntoNumbers(position).get(1);
 		if (isLegalMove(currentPlayer, row, column)) {
+		    currentPlayer.addTally(1); // Update tally
 		    board.get(row).set(column, currentPlayer.getName());
 		    reversePieces(currentPlayer, otherPlayer, row, column);
 		    return true;
